@@ -32,11 +32,22 @@ dot:
     blt a4, t0, error_terminate  
 
     li t0, 0            
-    li t1, 0         
+    li t1, 0
 
 loop_start:
     bge t1, a2, loop_end
     # TODO: Add your own implementation
+    lw t2, 0(a0)
+    lw t3, 0(a1)
+    mul t2, t2, t3
+    add t0, t0, t2
+    addi t1, t1, 1
+    slli t4, a3, 2
+    slli t5, a4, 2
+    add a0, a0, t4
+    add a1, a1, t5
+    j loop_start
+    
 
 loop_end:
     mv a0, t0
