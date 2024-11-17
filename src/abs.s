@@ -22,9 +22,7 @@ abs:
     bge t0, zero, done
 
     # TODO: Add your own implementation
-    li t1, -1
-    xor t0, t0, t1
-    addi t0, t0, 1
+    sub t0, x0, t0
     sw t0, 0(a0) 
 done:
     # Epilogue
