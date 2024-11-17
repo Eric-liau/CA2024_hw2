@@ -39,8 +39,20 @@ loop_start:
     # TODO: Add your own implementation
     lw t2, 0(a0)
     lw t3, 0(a1)
-    mul t2, t2, t3
-    add t0, t0, t2
+    # mul t5, t2, t3
+    li t5, 0
+mul_loop:
+    beq t3, x0, mul_end
+    andi t4, t3, 1
+    beq t4, x0, mul_cont
+    add t5, t5, t2
+mul_cont:
+    slli t2, t2, 1
+    srli t3, t3, 1
+    j mul_loop
+mul_end:
+
+    add t0, t0, t5
     addi t1, t1, 1
     slli t4, a3, 2
     slli t5, a4, 2
