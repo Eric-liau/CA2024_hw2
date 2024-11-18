@@ -33,7 +33,9 @@ dot:
 
     li t0, 0            
     li t1, 0
-
+    addi sp, sp, -8
+    sw s0, 0(sp)
+    sw s1, 4(sp)
 loop_start:
     bge t1, a2, loop_end
     # TODO: Add your own implementation
@@ -41,6 +43,13 @@ loop_start:
     lw t3, 0(a1)
     # mul t5, t2, t3
     li t5, 0
+    slt s0, t2, x0
+    slt s1, t3, x0
+    beq s0, x0, pos1
+    sub t2, x0, t2
+pos1: 
+    beq s1, x0, mul_loop
+    sub t3, x0, t3
 mul_loop:
     beq t3, x0, mul_end
     andi t4, t3, 1
@@ -51,6 +60,9 @@ mul_cont:
     srli t3, t3, 1
     j mul_loop
 mul_end:
+    beq s0, s1, mul_finish
+    sub t5, x0, t5
+mul_finish:
 
     add t0, t0, t5
     addi t1, t1, 1
@@ -62,6 +74,10 @@ mul_end:
     
 
 loop_end:
+    lw s0, 0(sp)
+    lw s1, 4(sp)
+    addi sp, sp, 8
+
     mv a0, t0
     jr ra
 
